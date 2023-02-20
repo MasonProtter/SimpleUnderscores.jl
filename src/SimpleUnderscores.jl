@@ -7,10 +7,10 @@ using MacroTools
 function _underscore(ex, __module__)
     arity = 1
     if ex isa Expr && ex.head == :tuple
-        pre_body, rest... = ex.args
+        pre_body, rest = ex.args[1], ex.args[2:end]
     else
         pre_body = ex
-        rest = ()
+        rest = []
     end
     body = MacroTools.prewalk(pre_body) do ex
         if ex isa Expr && ex.head == :macrocall
