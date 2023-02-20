@@ -39,7 +39,7 @@ Macros appearing inside a `@->` macro are recursively hit with `macroexpand` in 
 There's a second, unexported macro `@_` which is the exact same as `@->` but some people may prefer the name. If you prefer that, then you can simply do `using SimpleUnderscores: @_`.
 
 ### Caveats
-Because the parser is such that [commmas parse tighter than macros](https://github.com/JuliaLang/julia/issues/36547#issuecomment-1437406477), when you write code like
+Because the parser is such that [commas parse tighter than macros](https://github.com/JuliaLang/julia/issues/36547#issuecomment-1437406477), when you write code like
 
 ``` julia
 map(@-> _ + _, [1, 2])
