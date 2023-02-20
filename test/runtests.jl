@@ -1,5 +1,5 @@
 using Test
-using SimpleUnderscores
+using SimpleUnderscores: @->, @_
 
 @testset "Tests" begin
     f = @_  _ + _

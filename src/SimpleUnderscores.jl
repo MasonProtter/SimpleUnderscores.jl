@@ -1,6 +1,6 @@
 module SimpleUnderscores
 
-export @_, @->
+export @->
 
 using MacroTools
 

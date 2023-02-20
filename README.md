@@ -2,9 +2,7 @@
 
 SimpleUnderscores.jl aims to provide yet another way to locally construct anonymous functions where the arguments do not need to be listed before they are used in the body, but taking an approach that differents from [Underscores.jl](https://github.com/c42f/Underscores.jl) with less complicated scoping rules. See also [JuliaLang/julia/issues/38713](https://github.com/JuliaLang/julia/issues/38713).
 
-By default, it exports two macros `@_` and `@->` which do the exact same thing, but people may prefer one name over the other, so I recommend choosing one and writing `using SimpleUnderscores: @_` or `using SimpleUnderscores: @->` depending on your preference.
-
-An expression captured by `@->` (or `@_`) interprets underscores `_` as a placeholder for a function argument. Hence, `@-> _ + 1` means the same thing as `x -> x + 1`. A bare underscore `_` always is the first argument to the function:
+By default, it exports one macro, `@->`. An expression acted on by `@->` interprets underscores `_` as a placeholder for a function argument. Hence, `@-> _ + 1` means the same thing as `x -> x + 1`. A bare underscore `_` always is the first argument to the function:
 ``` julia
 julia> using SimpleUnderscores: @->
 
@@ -37,6 +35,8 @@ julia> map(@-> _1.a + _2.b, [(;a=1,), (;a=2)], [(;b=3), (;b=4)])
 ```
 
 Macros appearing inside a `@->` macro are recursively hit with `macroexpand` in the approporiate module, this is to make sure that things like `@-> filter(@-> _.a > 1, _)` correctly work.
+
+There's a second, unexported macro `@_` which is the exact same as `@->` but some people may prefer the name. If you prefer that, then you can simply do `using SimpleUnderscores: @_`.
 
 ### Caveats
 Because the parser is such that [commmas parse tighter than macros](https://github.com/JuliaLang/julia/issues/36547#issuecomment-1437406477), when you write code like
