@@ -25,7 +25,6 @@ julia> λ(5, 6, 7)
 
 julia> λ(5,6)
 ERROR: MethodError: no method matching (::var"#23#24")(::Int64, ::Int64)
-
 Closest candidates are:
   (::var"#23#24")(::Any, ::Any, ::Any)
 
@@ -50,15 +49,9 @@ this will actually get parsed as `map(@->(((_ + _), [1, 2])))` rather than `map(
 ``` julia
 julia> @-> _, [1] # Doesn't work :(
 ERROR: syntax: "..." expression outside call around REPL[39]:1
-Stacktrace:
- [1] top-level scope
-   @ REPL[39]:1
    
 julia> (@-> _, [1]) # Also doesn't work :(((
 ERROR: syntax: "..." expression outside call around REPL[40]:1
-Stacktrace:
- [1] top-level scope
-   @ REPL[40]:1
    
 julia> ((@-> _, [1]),) # At least this works.
 (var"#31#32"(), [1])
