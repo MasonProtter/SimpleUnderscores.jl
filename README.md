@@ -4,7 +4,7 @@ SimpleUnderscores.jl aims to provide yet another way to locally construct anonym
 
 By default, it exports one macro, `@->`. An expression acted on by `@->` interprets underscores `_` as a placeholder for a function argument. Hence, `@-> _ + 1` means the same thing as `x -> x + 1`. A bare underscore `_` always is the first argument to the function:
 ``` julia
-julia> using SimpleUnderscores: @->
+julia> using SimpleUnderscores
 
 julia> map(@-> _ + _, [1,2,3])
 3-element Vector{Int64}:
