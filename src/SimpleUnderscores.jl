@@ -4,6 +4,10 @@ export @->
 
 using MacroTools
 
+if !isdefined(SimpleUnderscores, :isnothing)
+    isnothing(x) = x === nothing
+end
+
 function _underscore(ex, __module__)
     arity = 1
     if ex isa Expr && ex.head == :tuple
