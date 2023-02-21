@@ -1,6 +1,6 @@
 module SimpleUnderscores
 
-export @->
+export @>
 
 using MacroTools
 
@@ -46,6 +46,10 @@ end
 end
 
 @eval macro $(Symbol("->"))(ex)
+    esc(_underscore(ex, __module__))
+end
+
+macro (>)(ex)
     esc(_underscore(ex, __module__))
 end
 
