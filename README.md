@@ -56,5 +56,6 @@ ERROR: syntax: "..." expression outside call around REPL[40]:1
 julia> ((@-> _, [1]),) # At least this works.
 (var"#31#32"(), [1])
 ```
+but you should probably just use `@->( ... )` instead in these case.
 
 If [julia/issues/48738](https://github.com/JuliaLang/julia/issues/48738) is resolved, then that should fix this.
