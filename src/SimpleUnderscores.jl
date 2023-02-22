@@ -9,7 +9,9 @@ if !isdefined(SimpleUnderscores, :isnothing)
 end
 
 function _underscore(ex, __module__)
-    arity = 1
+    arity = 0
+    has_vararg = false
+    tag = gensym()
     if ex isa Expr && ex.head == :tuple
         pre_body, rest = ex.args[1], ex.args[2:end]
     else
@@ -21,18 +23,28 @@ function _underscore(ex, __module__)
             macroexpand(__module__, ex)
         elseif ex == :_
             ex = :_1 # turn :_ into :_1
+            arity = max(arity, 1)
+            Symbol(ex, tag)
+        elseif ex == :__
+            has_vararg = true
+            Symbol(:args, tag)
         elseif ex isa Symbol
             s = String(ex)
             if !isnothing(match(r"^_[0-9]+$", s))
                 n = parse(Int, s[2:end])
                 arity = max(arity, n)
+                Symbol(ex, tag)
+            else
+                ex
             end
-            ex
         else
             ex
         end
     end
-    args = Expr(:tuple, (Symbol(:_, n) for n ∈ 1:arity)...)
+    args = Expr(:tuple, (Symbol(:_, n, tag) for n ∈ 1:arity)...)
+    if has_vararg
+        push!(args.args, :($(Symbol(:args, tag))...))
+    end
     λ = :($args -> $body)
     if length(rest) == 0
         λ
